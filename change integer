@@ -1,0 +1,49 @@
+public class Num2Rum 
+{
+	private String[] hanArr = {"零" , "壹" , "贰" , "叁" , "肆" , 
+			"伍" , "陆" , "柒" , "捌" , "玖"};
+		private String[] unitArr = {"十" , "百" , "千","万","十万","百万"};//首先将对应的转化数字放进数组中一一对应
+		
+		private String ToHanStr(String numStr)
+		{
+			String result="";
+			int numLen=numStr.length();
+			for (int i=0;i<numLen;i++)
+			{
+				int num=numStr.charAt(i)-48;//转化为数字，asc码值转化
+				if(i!=numLen-1&&num!=0)
+				{
+					result+=hanArr[num]+unitArr[numLen-2-i];//hanArr为系数，unitArr为后面进位的数
+				}
+				else
+				{
+					if(result.length()!=0&&hanArr[num].equals("零")&&result.charAt(result.length()-1)=='零')
+					{
+						continue;
+					}
+					else
+					{
+						result+=hanArr[num];
+					}//前面不为零的时候加上
+				}
+			}
+			if(result.length()==1)
+				return result;
+			int index=result.length()-1;
+			while (result.charAt(index)=='零')
+			{
+				index--;
+			}
+			if(index!=result.length()-1)
+			{
+				return result.substring(0, index+1);
+			}
+			else
+				return result;
+		}
+	public static void main(String[] args)
+	{
+		Num2Rum change=new Num2Rum();
+		System.out.println(change.ToHanStr("100"));
+	}
+}
